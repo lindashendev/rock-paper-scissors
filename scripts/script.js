@@ -1,11 +1,14 @@
 // begin with a function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. We’ll use this function in the game to make the computer’s play. Tip: use the console to make sure this is returning the expected output before moving to the next step!
 
+let userScore = 0;
+
 // randomizes
 const gamePlay = [
   'rock',
   'paper',
   'scissors'
 ]
+
 function computerPlay() {
   const randomIndex = Math.floor(Math.random() * gamePlay.length);
   return gamePlay[randomIndex];
@@ -36,4 +39,22 @@ function playerSelection(choice) {
 }
 
 // Call the function 
-console.log(playRound(playerSelection("rock"), computerPlay()));
+function userPrompt() {
+  const userInput = prompt("Please enter rock, paper or scissors");
+  return playerSelection(userInput);
+}
+
+// rounds 
+for (let i = 0; i < 5; i++) {
+  const userChoice = userPrompt();
+  if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
+    const result = playRound(playerSelection(userChoice), computerPlay());
+    if (/win/.test(result)) {
+      userScore++;
+    }
+  } else {
+    userPrompt();
+  }
+}
+
+console.log(userScore);
