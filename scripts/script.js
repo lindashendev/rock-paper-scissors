@@ -59,10 +59,10 @@ function gamePlay(userChoice) {
   if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
     const result = playRound(playerSelection(userChoice), computerPlay());
     output.textContent = result;
-    score.textContent = userScore;
     
     if (/win/.test(result)) {
       userScore++;
+      score.textContent = userScore;
     }
   } 
 }
