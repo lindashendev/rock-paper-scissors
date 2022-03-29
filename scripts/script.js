@@ -1,9 +1,7 @@
-// begin with a function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. We’ll use this function in the game to make the computer’s play. Tip: use the console to make sure this is returning the expected output before moving to the next step!
-
 let userScore = 0;
 
 // randomizes
-const gamePlay = [
+const options = [
   'rock',
   'paper',
   'scissors'
@@ -11,10 +9,10 @@ const gamePlay = [
 
 function computerPlay() {
   const randomIndex = Math.floor(Math.random() * gamePlay.length);
-  return gamePlay[randomIndex];
+  return options[randomIndex];
 }
 
-// Write a function that plays a single round of Rock Paper Scissors. The function should take two parameters - the playerSelection and computerSelection - and then return a string 
+// function that plays a single round of Rock Paper Scissors
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === "rock" && computerSelection === "scissors") {
     return "You win! Rock beats scissors";
@@ -40,21 +38,33 @@ function playerSelection(choice) {
 
 // Call the function 
 function userPrompt() {
-  const userInput = prompt("Please enter rock, paper or scissors");
-  return playerSelection(userInput);
+  const userSelect = document.querySelectorAll("button");
+  userSelect.forEach((button) => {
+    button.addEventListener('click', event => {
+      const userInput = event.target.textContent.toLowerCase();
+      gamePlay(userInput);
+    })
+  })
 }
 
+// select elements
+const output = document.createElement("p");
+const message = document.querySelector(".message");
+const score = document.createElement("p");
+message.append(output, score);
+
 // rounds 
-for (let i = 0; i < 5; i++) {
-  const userChoice = userPrompt();
+function gamePlay(userChoice) {
+
   if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
     const result = playRound(playerSelection(userChoice), computerPlay());
+    output.textContent = result;
+    score.textContent = userScore;
+    
     if (/win/.test(result)) {
       userScore++;
     }
-  } else {
-    userPrompt();
-  }
+  } 
 }
 
-console.log(userScore);
+userPrompt();
